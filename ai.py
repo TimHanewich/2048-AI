@@ -42,6 +42,12 @@ class MoveDecision:
         
         # concentration leap, as a percentage
         ToReturn = (self.concentration_after - self.concentration_before) / self.concentration_before
+
+        # if the max value jumped, add a little
+        if self.max_value_after > self.max_value_before:
+            ToReturn = ToReturn * 1.35
+
+
         return ToReturn
 
 def sort_by_gain(mds:list[MoveDecision]) -> list[MoveDecision]:
@@ -142,8 +148,6 @@ def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> l
 
 
 # Train
-highest_max:int = 0 # the highest title achieved on any previous ones
-highest_total:int = 0 # the highest TOTAL (sum) achieved on any previous ones
 while True:
 
     g:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game()
@@ -152,27 +156,8 @@ while True:
     print("Playing game...")
     game_data:list[MoveDecision] = self_play(model, g)
 
-    # gather data from it - it's max and total
-    game_max:int = tools.max_value(g)
-    game_total:int = tools.total_value(g)
-    print("Max: " + str(game_max))
-    print("Total: " + str(game_total))
-
-    # decide wether to train it on this or not (was it "more successful" than our last iterations?)
-    should_train:bool = False
-
-    # first, we SHOULD train if we have elipsed the high score (max tile)
-    if should_train == False:
-        if game_max > highest_max: # if this eclipsed the last, yes
-            print("Will train on this one - it broke the high max!")
-            should_train = True
+    # sort the game data by concentration gain
     
-    # If the above didn't become true, we SHOULD train if we at least tied the high score but also have more value on the board
-    if should_train == False:
-        if game_max == highest_max: # if this game did not at least tie the max score, then forget it
-            if game_total > highest_total: # the sum of all tiles on the thing was higher than the highest we have seen with the same high score tile
-                print("Will train on this one - it tied the max but produced a higher total value.")
-                should_train = True
 
     
     # train?
