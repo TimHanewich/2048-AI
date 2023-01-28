@@ -204,7 +204,7 @@ while True:
         print("It is time to save!")
 
         # create a folder
-        save_to:str = save_to_directory + "\\" + str(datetime.datetime.utcnow())
+        save_to:str = save_to_directory + "\\" + str(datetime.datetime.utcnow()).replace(":", "-")
         print("Making directory '" + save_to + "'...")
         os.mkdir(save_to)
 
