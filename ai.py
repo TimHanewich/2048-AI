@@ -45,41 +45,52 @@ def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> l
         md.input = inputs
         md.output = output[0]
 
-        # polarize
-        if md.output[0] == max(md.output):
-            md.output_polarized = [1, 0, 0, 0]
-        elif md.output[1] == max(md.output):
-            md.output_polarized = [0, 1, 0, 0]
-        elif md.output[2] == max(md.output):
-            md.output_polarized = [0, 0, 1, 0]
-        elif md.output[3] == max(md.output):
-            md.output_polarized = [0, 0, 0, 1]
+        # priotizie the list of moves
+        priorities:list[str] = tools.prioritize_moves(md.output)
+        
+        # attempt to move based on that list, until we confirm a change has been made
+        game_over:bool = False
+        move_has_been_made:bool = False
+        for priority in priorities:
+            if move_has_been_made == False and game_over == False:
 
-        # save the MoveDecision
+                # take note of the current position
+                board_before = copy.deepcopy(g.getBoard())
+
+                # try to make the move
+                try:
+                    if priority == "up":
+                        g.up()
+                    elif priority == "right":
+                        g.right()
+                    elif priority == "down":
+                        g.down()
+                    elif priority == "left":
+                        g.left()
+                except:
+                    game_over = True
+
+                # check to see if the board now is different than it was before
+                board_after = copy.deepcopy(g.getBoard())
+                if board_after != board_before:
+                    move_has_been_made = True
+
+                    # write to the decision
+                    if priority == "up":
+                        md.output_polarized = [1, 0, 0, 0]
+                    elif priority == "right":
+                        md.output_polarized = [0, 1, 0, 0]
+                    elif priority == "down":
+                        md.output_polarized = [0, 0, 1, 0]
+                    elif priority == "left":
+                        md.output_polarized = [0, 0, 0, 1]
+                
+        # add the move decision
         ToReturn.append(md)
 
-        # move - up, right, down, left. But quit if an exception (either game won or game loss) is thrown
-        board_before = copy.deepcopy(g.getBoard())
-        try:
-            if md.output_polarized[0] == 1:
-                g.up()
-            elif md.output_polarized[1] == 1:
-                g.right()
-            elif md.output_polarized[2] == 1:
-                g.down()
-            elif md.output_polarized[3] == 1:
-                g.left()
-        except:
-            break
-
-        # if the board, after our move, is the same as what it was before our move, we are frozen. So stop playing and return
-        board_after = g.getBoard()
-        if board_after == board_before:
-            break
-    
-    return ToReturn
-        
-        
+        # if it is game over, return
+        if game_over:
+            return ToReturn
 
 # Train
 while True:
