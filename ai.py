@@ -151,7 +151,7 @@ def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> l
 
 
 # training params
-save_model_every_seconds = 1800
+save_model_every_seconds = 20
 save_to_directory = r"C:\Users\timh\Downloads\tah\2048-ai\models"
 
 
@@ -198,7 +198,7 @@ while True:
     model.fit(inputs_np, ouputs_np, epochs=3000, verbose=False)
 
     # if the amount of time since the last training has surpassed the limit, save
-    time_since_save:datetime.timedelta = datetime.datetime.utcnow() - time_since_save
+    time_since_save:datetime.timedelta = datetime.datetime.utcnow() - last_saved_at
     if time_since_save.total_seconds() >= save_model_every_seconds:
 
         print("It is time to save!")
