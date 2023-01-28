@@ -4,6 +4,8 @@ import numpy as np
 import tools
 import copy
 import math
+import os
+import datetime
 
 layer_input:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(176, "relu")
 layer_h1:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(250, "relu")
@@ -148,7 +150,13 @@ def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> l
             return ToReturn
 
 
+# training params
+save_model_every_seconds = 1800
+save_to_directory = r"C:\Users\timh\Downloads\tah\2048-ai\models"
+
+
 # Train
+last_saved_at = datetime.datetime.utcnow()
 while True:
 
     g:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game()
@@ -188,4 +196,22 @@ while True:
     # fit
     print("Training...")
     model.fit(inputs_np, ouputs_np, epochs=3000, verbose=False)
+
+    # if the amount of time since the last training has surpassed the limit, save
+    time_since_save:datetime.timedelta = datetime.datetime.utcnow() - time_since_save
+    if time_since_save.total_seconds() >= save_model_every_seconds:
+
+        print("It is time to save!")
+
+        # create a folder
+        save_to:str = save_to_directory + "\\" + str(datetime.datetime.utcnow())
+        print("Making directory '" + save_to + "'...")
+        os.mkdir(save_to)
+
+        # save to folder
+        print("Saving...")
+        model.save(save_to)
+
+        # update the saved time
+        last_saved_at = datetime.datetime.utcnow()
 
