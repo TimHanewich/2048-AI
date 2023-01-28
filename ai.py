@@ -3,6 +3,7 @@ import Py2048_Engine.Game
 import numpy as np
 import tools
 import copy
+import math
 
 layer_input:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(176, "relu")
 layer_h1:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(250, "relu")
@@ -157,30 +158,29 @@ while True:
     game_data:list[MoveDecision] = self_play(model, g)
 
     # sort the game data by concentration gain
-    
+    game_data_sorted:list[MoveDecision] = sort_by_gain(game_data)
+
+    # select the ones we will train on
+    TopPercentToTrain = 0.25
+    CountToTrain = math.floor(len(game_data_sorted) * TopPercentToTrain)
+    ToTrain:list[MoveDecision] = []
+    for x in range(0, CountToTrain):
+        ToTrain.append(game_data_sorted[x])
 
     
-    # train?
-    if should_train:
-
-        # update the high
-        highest_max = game_max
-        highest_total = game_total
-
+    # Establish a list of training data (inputs + outputs)
+    inputs:list[list[int]] = [] #A list of "board positions" (scenarios) as the input
+    outputs:list[list[int]] = [] # A list of the decision that was made (correctly) in each scenario
+    for md in ToTrain:
         # assemble a list of input & output scenarios
-        inputs:list[list[int]] = []
-        outputs:list[list[int]] = []
-        for md in game_data:
-            inputs.append(md.input)
-            outputs.append(md.output_polarized)
+        inputs.append(md.input)
+        outputs.append(md.output_polarized)
 
-        # turn into numpy arrays
-        inputs_np = np.array(inputs)
-        ouputs_np = np.array(outputs)
+    # turn into numpy arrays
+    inputs_np = np.array(inputs)
+    ouputs_np = np.array(outputs)
 
-        # fit
-        print("Training...")
-        model.fit(inputs_np, ouputs_np, epochs=1500, verbose=True)
-    else:
-        print("Skipping training.")
+    # fit
+    print("Training...")
+    model.fit(inputs_np, ouputs_np, epochs=1500, verbose=True)
 
