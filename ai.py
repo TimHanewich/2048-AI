@@ -157,6 +157,11 @@ while True:
     print("Playing game...")
     game_data:list[MoveDecision] = self_play(model, g)
 
+    # print the high
+    game_max:int = tools.max_value(g)
+    game_concentration:float = tools.concentration(g)
+    print("Game Max: " + str(game_max) + ", Game Concentration: " + str(round(game_concentration, 1)))
+
     # sort the game data by concentration gain
     game_data_sorted:list[MoveDecision] = sort_by_gain(game_data)
 
