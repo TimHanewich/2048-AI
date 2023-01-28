@@ -171,6 +171,20 @@ def total_value(g:Py2048_Engine.Game.Game) -> int:
     
     return ToReturn
 
+def concentration(g:Py2048_Engine.Game.Game) -> float:
+
+    sum:int = total_value(g)
+    
+    # count the number of tiles that have data
+    tile_count:int = 0
+    data = g.getBoard()
+    for row in data:
+        for col in row:
+            if col != None:
+                tile_count = tile_count + 1
+    
+    return sum / tile_count
+
 # returns a list of move priorities as a list of string (up, right, down, left)
 def prioritize_moves(inputs:list[float]) -> list[str]:
 

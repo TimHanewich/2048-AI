@@ -25,9 +25,49 @@ model.compile("adam", "mean_squared_error")
 print("Model assembled.")
 
 class MoveDecision:
+
+    # before
+    max_value_before:int = 0
+    concentration_before:float = 0.0
+
+    # after
+    max_value_after:int = 0
+    concentration_after:float = 0.0
+
+    # raw input + output from the model
     input:list[int] = [] # 176 long
-    output:list[float] = [] # 4 long (up, right, down, left)
     output_polarized:list[int] = [] # 4 long, but the decision that was made is 1, the decision that was not made is 0. THIS IS WHAT WILL BE USED FOR TRAINING
+
+    def gain(self) -> float:
+        
+        # concentration leap, as a percentage
+        ToReturn = (self.concentration_after - self.concentration_before) / self.concentration_before
+        return ToReturn
+
+def sort_by_gain(mds:list[MoveDecision]) -> list[MoveDecision]:
+
+    # calculate
+    ToSort:list[tuple[MoveDecision, float]] = []
+    for md in mds:
+        ToSort.append((md, md.gain()))
+    
+    # sort
+    ToReturn:list[tuple[MoveDecision, float]] = []
+    while len(ToSort) > 0:
+        winner = ToSort[0]
+        for tup in ToSort:
+            if tup[1] > winner[1]:
+                winner = tup
+        ToReturn.append(winner)
+        ToSort.remove(winner)
+
+    # create a list of just the MoveDecision
+    ToReturnMDs:list[MoveDecision] = []
+    for da in ToReturn:
+        ToReturnMDs.append(da[0])
+
+    return ToReturnMDs
+
 
 # plays until win, loss, or frozen (AI keeps just doing the same thing over and over again and the game goes nowhere)
 def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> list[MoveDecision]:
@@ -44,6 +84,8 @@ def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> l
         md:MoveDecision = MoveDecision()
         md.input = inputs
         md.output = output[0]
+        md.max_value_before = tools.max_value(g)
+        md.concentration_before = tools.concentration(g)
 
         # priotizie the list of moves
         priorities:list[str] = tools.prioritize_moves(md.output)
@@ -73,7 +115,13 @@ def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> l
                 # check to see if the board now is different than it was before
                 board_after = copy.deepcopy(g.getBoard())
                 if board_after != board_before:
+
+                    # mark that a move has been made
                     move_has_been_made = True
+
+                    # save the after statistics
+                    md.max_value_after = tools.max_value(g)
+                    md.concentration_after = tools.concentration(g)
 
                     # write to the decision
                     if priority == "up":
@@ -91,6 +139,13 @@ def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> l
         # if it is game over, return
         if game_over:
             return ToReturn
+
+g = Py2048_Engine.Game.Game()
+data = self_play(model, g)
+data = sort_by_gain(data)
+for d in data:
+    print(d.gain())
+input("De")
 
 # Train
 highest_max:int = 0 # the highest title achieved on any previous ones
