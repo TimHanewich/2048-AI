@@ -129,6 +129,10 @@ while True:
     # train?
     if should_train:
 
+        # update the high
+        highest_max = game_max
+        highest_total = game_total
+
         # assemble a list of input & output scenarios
         inputs:list[list[int]] = []
         outputs:list[list[int]] = []
