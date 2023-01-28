@@ -166,7 +166,7 @@ while True:
     game_data_sorted:list[MoveDecision] = sort_by_gain(game_data)
 
     # select the ones we will train on
-    TopPercentToTrain = 0.25
+    TopPercentToTrain = 0.10
     CountToTrain = math.floor(len(game_data_sorted) * TopPercentToTrain)
     ToTrain:list[MoveDecision] = []
     for x in range(0, CountToTrain):
@@ -187,5 +187,5 @@ while True:
 
     # fit
     print("Training...")
-    model.fit(inputs_np, ouputs_np, epochs=1500, verbose=False)
+    model.fit(inputs_np, ouputs_np, epochs=3000, verbose=False)
 
