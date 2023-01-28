@@ -187,5 +187,5 @@ while True:
 
     # fit
     print("Training...")
-    model.fit(inputs_np, ouputs_np, epochs=1500, verbose=True)
+    model.fit(inputs_np, ouputs_np, epochs=1500, verbose=False)
 
