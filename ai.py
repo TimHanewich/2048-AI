@@ -140,12 +140,6 @@ def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> l
         if game_over:
             return ToReturn
 
-g = Py2048_Engine.Game.Game()
-data = self_play(model, g)
-data = sort_by_gain(data)
-for d in data:
-    print(d.gain())
-input("De")
 
 # Train
 highest_max:int = 0 # the highest title achieved on any previous ones
