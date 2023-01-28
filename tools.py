@@ -171,4 +171,20 @@ def total_value(g:Py2048_Engine.Game.Game) -> int:
     
     return ToReturn
 
+# returns a list of move priorities as a list of string (up, right, down, left)
+def prioritize_moves(inputs:list[float]) -> list[str]:
+
+    inputs_sorted = sorted(inputs, reverse=True)
+    
+    ToReturn:list[str] = []
+    for i in inputs_sorted:
+        if i == inputs[0]:
+            ToReturn.append("up")
+        elif i == inputs[1]:
+            ToReturn.append("right")
+        elif i == inputs[2]:
+            ToReturn.append("down")
+        elif i == inputs[3]:
+            ToReturn.append("left")
+    return ToReturn
 
