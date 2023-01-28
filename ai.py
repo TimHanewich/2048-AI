@@ -93,68 +93,46 @@ def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> l
             return ToReturn
 
 # Train
+highest_max:int = 0 # the highest title achieved on any previous ones
+highest_total:int = 0 # the highest TOTAL (sum) achieved on any previous ones
 while True:
 
-    game1:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game()
-    game2:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game()
+    g:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game()
 
-    # play game 1 + 2
-    game1_data:list[MoveDecision] = self_play(model, game1)
-    game2_data:list[MoveDecision] = self_play(model, game2)
+    # play game
+    print("Playing game...")
+    game_data:list[MoveDecision] = self_play(model, g)
 
-    # determine which game was more successful
-    best_game:int = 0 # 0 = tie, 1 = game 1 was more successful, 2 = game 2 was more successful
-    game1_max = tools.max_value(game1)
-    game2_max = tools.max_value(game2)
-    game1_total = tools.total_value(game1)
-    game2_total = tools.total_value(game2)
+    # gather data from it - it's max and total
+    game_max:int = tools.max_value(g)
+    game_total:int = tools.total_value(g)
+    print("Max: " + str(game_max))
+    print("Total: " + str(game_total))
 
-    # first, judge on the max (high)
-    if game1_max > game2_max:
-        best_game = 1
-    elif game2_max > game1_max:
-        best_game = 2
-    else: # it was a tie on the high number
+    # decide wether to train it on this or not (was it "more successful" than our last iterations?)
+    should_train:bool = False
 
-        # second, judge on number of moves (fewer moves with the same max value are more efficient)
-        if game1.numMoves < game2.numMoves:
-            best_game = 1
-        elif game2.numMoves < game1.numMoves:
-            best_game = 2
-        else:
-
-            # third, judge on total score
-            if game1_total > game2_total:
-                best_game = 1
-            elif game2_total > game1_total:
-                best_game = 2
-            else:
-                best_game = 0
-
-    # print
-    if best_game == 1:
-        print("Achieved high: " + str(game1_max))
-        print("Achieved total: " + str(game1_total))
-    elif best_game == 2:
-        print("Achieved high: " + str(game2_max))
-        print("Achieved total: " + str(game2_total))
+    # first, we SHOULD train if we have elipsed the high score (max tile)
+    if should_train == False:
+        if game_max > highest_max: # if this eclipsed the last, yes
+            print("Will train on this one - it broke the high max!")
+            should_train = True
     
-    # Select the best decisions
-    correct_decisions:list[MoveDecision] = None
-    if best_game == 1:
-        correct_decisions = game1_data
-    elif best_game == 2:
-        correct_decisions = game2_data
-    else:
-        correct_decisions = None
+    # If the above didn't become true, we SHOULD train if we at least tied the high score but also have more value on the board
+    if should_train == False:
+        if game_max == highest_max: # if this game did not at least tie the max score, then forget it
+            if game_total > highest_total: # the sum of all tiles on the thing was higher than the highest we have seen with the same high score tile
+                print("Will train on this one - it tied the max but produced a higher total value.")
+                should_train = True
 
-    # train
-    if correct_decisions != None:
+    
+    # train?
+    if should_train:
 
         # assemble a list of input & output scenarios
         inputs:list[list[int]] = []
         outputs:list[list[int]] = []
-        for md in correct_decisions:
+        for md in game_data:
             inputs.append(md.input)
             outputs.append(md.output_polarized)
 
@@ -165,4 +143,6 @@ while True:
         # fit
         print("Training...")
         model.fit(inputs_np, ouputs_np, epochs=10, verbose=False)
+    else:
+        print("Skipping training.")
 
