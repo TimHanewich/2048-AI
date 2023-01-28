@@ -85,8 +85,8 @@ def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> l
                     elif priority == "left":
                         md.output_polarized = [0, 0, 0, 1]
                 
-        # add the move decision
-        ToReturn.append(md)
+                    # add the move decision, only if a move was confirmed made
+                    ToReturn.append(md)
 
         # if it is game over, return
         if game_over:
