@@ -10,7 +10,7 @@ model_dir_path:str = r"C:\Users\timh\Downloads\tah\2048-ai\models\2023-01-28 22-
 model:tf.keras.Sequential = tf.keras.models.load_model(model_dir_path)
 
 # inputs
-play_count = 100
+play_count = 10
 
 # play a game X number of times
 maxs:list[int] = []
@@ -29,6 +29,7 @@ for x in range(0, play_count):
     concentrations.append(tools.concentration(g))
 
 # print the results
+print("Average Results after " + str(play_count) + " games:")
 print("Avg Max Value: " + str(sum(maxs) / len(maxs)))
 print("Avg Concentration: " + str(sum(concentrations) / len(concentrations)))
     
