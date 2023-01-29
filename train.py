@@ -8,19 +8,28 @@ import os
 import datetime
 import ai_tools
 
-layer_input:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Input(176)
-layer_h1:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(150, "relu")
-layer_h2:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(100, "relu")
-layer_h3:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(50, "relu")
-layer_output:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(4)
+# load model?
+model_path:str = r""
+model:tensorflow.keras.Sequential = None
+if model_path != None and model_path != "":
+    print("Loading model from '" + model_path + "'")
+    model = tensorflow.keras.models.load_model(model_path)
+else:
+    print("A model path was not provided! Constructing a new model...")
 
-model:tensorflow.keras.Sequential = tensorflow.keras.Sequential()
-model.add(layer_input)
-model.add(layer_h1)
-model.add(layer_h2)
-model.add(layer_h3)
-model.add(layer_output)
-model.compile("adam", "mean_squared_error")
+    layer_input:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Input(176)
+    layer_h1:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(150, "relu")
+    layer_h2:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(100, "relu")
+    layer_h3:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(50, "relu")
+    layer_output:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(4)
+
+    model = tensorflow.keras.Sequential()
+    model.add(layer_input)
+    model.add(layer_h1)
+    model.add(layer_h2)
+    model.add(layer_h3)
+    model.add(layer_output)
+    model.compile("adam", "mean_squared_error")
 
 print("Model assembled.")
 
