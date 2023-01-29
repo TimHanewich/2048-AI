@@ -27,7 +27,7 @@ print("Model assembled.")
 
 
 # training params
-save_model_every_seconds = 1800
+save_model_every_seconds = 600
 save_to_directory = r"C:\Users\timh\Downloads\tah\2048-ai\models"
 
 
