@@ -1,17 +1,35 @@
-from Py2048_Engine.Game import Game
+import os
+import tensorflow as tf
+import Py2048_Engine.Game
+import tools
+import ai_tools
 
-g = Game()
+model_dir_path:str = r"C:\Users\timh\Downloads\tah\2048-ai\models\2023-01-28 22-36-57.175257"
 
-while True:
-    g.up()
-    g.left()
-    g.down()
-    g.right()
-    print(g)
-    print(g.numMoves)
-    print()
+# load the model
+model:tf.keras.Sequential = tf.keras.models.load_model(model_dir_path)
 
+# inputs
+play_count = 100
 
-# test winning
-g.board[0][0] = 1024
-g.board[0][1] = 1024
+# play a game X number of times
+maxs:list[int] = []
+concentrations:list[float] = []
+for x in range(0, play_count):
+
+    # create a game
+    g:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game()
+
+    # play to completion
+    print("Playing game # " + str(x+1) + "... ")
+    data:list[ai_tools.MoveDecision] = ai_tools.self_play(model, g)
+
+    # take a note
+    maxs.append(tools.max_value(g))
+    concentrations.append(tools.concentration(g))
+
+# print the results
+print("Avg Max Value: " + str(sum(maxs) / len(maxs)))
+print("Avg Concentration: " + str(sum(concentrations) / len(concentrations)))
+    
+
