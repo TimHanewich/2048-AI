@@ -8,7 +8,7 @@ import os
 import datetime
 import ai_tools
 
-layer_input:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(176, "relu")
+layer_input:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Input(176)
 layer_h1:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(150, "relu")
 layer_h2:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(100, "relu")
 layer_h3:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(50, "relu")
