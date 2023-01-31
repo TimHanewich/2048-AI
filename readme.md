@@ -1,3 +1,7 @@
+## Exlaining the folders
+- **models** - First implementation
+- **models2** - Added more hidden layers, started from scratch
+
 ## Tests
 - 2023-01-29 04-35-08.354122
     - Avg Max Value: 94.72  
