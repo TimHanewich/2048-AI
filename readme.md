@@ -38,3 +38,6 @@ I'm adding significantly more hidden neurons to a model and training from there.
 - 2023-01-31 15-45-44.891697
     - Avg Max Value: 82.4
     - Avg Concentration: 17.421875
+- 2023-01-31 18-45-10.140012
+    - Avg Max Value: 108.4
+    - Avg Concentration: 18.45
