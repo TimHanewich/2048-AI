@@ -14,3 +14,6 @@
 - 2023-01-30 13-56-54.905192
     - Avg Max Value: 181.76
     - Avg Concentration: 28.305
+- 2023-01-31 04-08-31.118039
+    - Avg Max Value: 126.72
+    - Avg Concentration: 24.215
