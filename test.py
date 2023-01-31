@@ -4,13 +4,13 @@ import Py2048_Engine.Game
 import tools
 import ai_tools
 
-model_dir_path:str = r"C:\Users\timh\Downloads\tah\2048-ai\models\2023-01-31 04-08-31.118039"
+model_dir_path:str = r"C:\Users\timh\Downloads\tah\2048-ai\models2\2023-01-31 04-46-14.085862"
 
 # load the model
 model:tf.keras.Sequential = tf.keras.models.load_model(model_dir_path)
 
 # inputs
-play_count = 25
+play_count = 80
 
 # play a game X number of times
 maxs:list[int] = []
