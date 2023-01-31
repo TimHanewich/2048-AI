@@ -17,3 +17,6 @@
 - 2023-01-31 04-08-31.118039
     - Avg Max Value: 126.72
     - Avg Concentration: 24.215
+
+## Structure 2
+I'm adding significantly more hidden neurons to a model and training from there.
