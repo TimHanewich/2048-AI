@@ -1,6 +1,6 @@
 ## Exlaining the folders
-- **models** - First implementation
-- **models2** - Added more hidden layers, started from scratch
+- **models** - First implementation. Development ended on this commit *3cbd1287113f01dc7fc61f25e0850c716140733d*
+- **models2** - Added more hidden layers, started new model from scratch.
 
 ## Tests
 - 2023-01-29 04-35-08.354122
