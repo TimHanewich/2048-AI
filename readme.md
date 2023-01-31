@@ -2,7 +2,7 @@
 - **models** - First implementation. Development ended on this commit *3cbd1287113f01dc7fc61f25e0850c716140733d*
 - **models2** - Added more hidden layers, started new model from scratch.
 
-## Tests
+## Structure 1 Tests
 - 2023-01-29 04-35-08.354122
     - Avg Max Value: 94.72  
     - Avg Concentration: 17.55
@@ -24,3 +24,8 @@
 
 ## Structure 2
 I'm adding significantly more hidden neurons to a model and training from there.
+
+### Tests
+- 2023-01-31 04-46-14.085862 (start/after only 1 training)
+    - Avg Max Value: 105.4
+    - Avg Concentration: 19.24375
