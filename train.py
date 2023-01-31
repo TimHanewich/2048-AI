@@ -49,7 +49,7 @@ save_to_directory = r"C:\Users\timh\Downloads\tah\2048-ai\models2"
 
 
 # Train
-last_saved_at = datetime.datetime.utcnow() # - datetime.timedelta(hours=1)
+last_saved_at = datetime.datetime.utcnow()  - datetime.timedelta(hours=1)
 while True:
 
     g:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game()
