@@ -203,7 +203,7 @@ def prioritize_moves(inputs:list[float]) -> list[str]:
             ToReturn.append("left")
     return ToReturn
 
-def number_of_different_tiles(g1:Py2048_Engine.Game.Game, g2:Py2048_Engine.Game.Game) -> int:
+def count_different_tiles(g1:Py2048_Engine.Game.Game, g2:Py2048_Engine.Game.Game) -> int:
     ToReturn:int = 0
     for row in range(0, 4):
         for col in range(0, 4):
@@ -221,10 +221,7 @@ class MoveOutcome:
     is_losing:bool = False # this move lost the game
 
 def explore(g:Py2048_Engine.Game.Game) -> list[MoveOutcome]:
-
-    # take a snapshot of the board before
-    board_before = copy.deepcopy(g.getBoard())
-    
+      
     ToReturn:list[MoveOutcome] = []
     ToTry:list[str] = ["up", "right", "down", "left"]
     for move in ToTry:
@@ -251,11 +248,9 @@ def explore(g:Py2048_Engine.Game.Game) -> list[MoveOutcome]:
         except Py2048_Engine.Game.GameLostException:
             mc.is_losing = True
         
-        # get a copy of the board now
-        board_after = copy.deepcopy(TheoryGame.getBoard())
 
-        # only add if they are different
-        if board_after != board_before:
+        # only add if there are more than 1 difference between (an addition was made)
+        if count_different_tiles(g, TheoryGame):
             mc.game = TheoryGame
             mc.direction = move
             ToReturn.append(mc)
