@@ -203,6 +203,13 @@ def prioritize_moves(inputs:list[float]) -> list[str]:
             ToReturn.append("left")
     return ToReturn
 
+def number_of_different_tiles(g1:Py2048_Engine.Game.Game, g2:Py2048_Engine.Game.Game) -> int:
+    ToReturn:int = 0
+    for row in range(0, 4):
+        for col in range(0, 4):
+            if g1.board[row][col] != g2.board[row][col]:
+                ToReturn = ToReturn + 1
+    return ToReturn
 
 
 class MoveOutcome:
@@ -256,10 +263,11 @@ def explore(g:Py2048_Engine.Game.Game) -> list[MoveOutcome]:
     return ToReturn
 
 g = Py2048_Engine.Game.Game()
-print(g)
-print("########")
-mos = explore(g)
-for data in mos:
-    print(data.direction)
-    print(data.game)
-    print("-------------")
+while True:
+    print(g)
+    print("########")
+    mos = explore(g)
+    if len(mos) < 4:
+        print("Less than 4!")
+        input()
+    g.right()
