@@ -1,4 +1,5 @@
 import Py2048_Engine.Game
+import copy
 
 # converts the current game board into a 176-input for a neural network
 def game_to_training_array(g:Py2048_Engine.Game.Game) -> list[int]:
@@ -202,3 +203,63 @@ def prioritize_moves(inputs:list[float]) -> list[str]:
             ToReturn.append("left")
     return ToReturn
 
+
+
+class MoveOutcome:
+    direction:str = None # either "up", "right", "down", or "left"
+    game:Py2048_Engine.Game.Game = None # the game output
+    
+    # statuses
+    is_winning:bool = False # this move won the game
+    is_losing:bool = False # this move lost the game
+
+def explore(g:Py2048_Engine.Game.Game) -> list[MoveOutcome]:
+
+    # take a snapshot of the board before
+    board_before = copy.deepcopy(g.getBoard())
+    
+    ToReturn:list[MoveOutcome] = []
+    ToTry:list[str] = ["up", "right", "down", "left"]
+    for move in ToTry:
+
+        # create the MoveOutcome
+        mc:MoveOutcome = MoveOutcome()
+        mc.direction = move
+        
+        # copy the game
+        TheoryGame:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game(copy.deepcopy(g.getBoard()))
+
+        # attempt to move
+        try:
+            if move == "up":
+                TheoryGame.up()
+            elif move == "right":
+                TheoryGame.right()
+            elif move == "down":
+                TheoryGame.down()
+            elif move == "left":
+                TheoryGame.left()
+        except Py2048_Engine.Game.GameWonException:
+            mc.is_winning = True
+        except Py2048_Engine.Game.GameLostException:
+            mc.is_losing = True
+        
+        # get a copy of the board now
+        board_after = copy.deepcopy(TheoryGame.getBoard())
+
+        # only add if they are different
+        if board_after != board_before:
+            mc.game = TheoryGame
+            mc.direction = move
+            ToReturn.append(mc)
+    
+    return ToReturn
+
+g = Py2048_Engine.Game.Game()
+print(g)
+print("########")
+mos = explore(g)
+for data in mos:
+    print(data.direction)
+    print(data.game)
+    print("-------------")
