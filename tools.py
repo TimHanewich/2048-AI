@@ -221,7 +221,7 @@ class MoveOutcome:
     is_losing:bool = False # this move lost the game
 
 def explore(g:Py2048_Engine.Game.Game) -> list[MoveOutcome]:
-      
+
     ToReturn:list[MoveOutcome] = []
     ToTry:list[str] = ["up", "right", "down", "left"]
     for move in ToTry:
@@ -250,7 +250,7 @@ def explore(g:Py2048_Engine.Game.Game) -> list[MoveOutcome]:
         
 
         # only add if there are more than 1 difference between (an addition was made)
-        if count_different_tiles(g, TheoryGame):
+        if count_different_tiles(g, TheoryGame) > 1:
             mc.game = TheoryGame
             mc.direction = move
             ToReturn.append(mc)
@@ -259,10 +259,14 @@ def explore(g:Py2048_Engine.Game.Game) -> list[MoveOutcome]:
 
 g = Py2048_Engine.Game.Game()
 while True:
+
+    data = explore(g)
+    
+
     print(g)
+    print("There are " + str(len(data)) + " potential moves.")
     print("########")
-    mos = explore(g)
-    if len(mos) < 4:
-        print("Less than 4!")
-        input()
+    input()
+
+
     g.right()
