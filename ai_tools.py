@@ -30,32 +30,31 @@ def self_play(model:tensorflow.keras.Sequential, g:Py2048_Engine.Game.Game) -> l
         priorities:list[str] = tools.prioritize_moves(output)
 
         # get a list of legal moves
-        legal_moves:list[tools.MoveOutcome] = tools.explore(g)
+        legal_moves:list[str] = tools.legal_moves(g)
 
         # make the move, according to prioritiy
         game_over:bool = False
         for priority in priorities:
 
             # Only play it if it is a legal move
-            for legal_move in legal_moves:
-                if legal_move.direction == priority:
+            if priority in legal_moves:
 
-                    # make the move
-                    try:
-                        if priority == "up":
-                            md.output_polarized = [1, 0, 0, 0]
-                            g.up()
-                        elif priority == "right":
-                            md.output_polarized = [0, 1, 0, 0]
-                            g.right()
-                        elif priority == "down":
-                            md.output_polarized = [0, 0, 1, 0]
-                            g.down()
-                        elif priority == "left":
-                            md.output_polarized = [0, 0, 0, 1]
-                            g.left()
-                    except: # the game is over. So add it and return
-                        game_over = True
+                # make the move
+                try:
+                    if priority == "up":
+                        md.output_polarized = [1, 0, 0, 0]
+                        g.up()
+                    elif priority == "right":
+                        md.output_polarized = [0, 1, 0, 0]
+                        g.right()
+                    elif priority == "down":
+                        md.output_polarized = [0, 0, 1, 0]
+                        g.down()
+                    elif priority == "left":
+                        md.output_polarized = [0, 0, 0, 1]
+                        g.left()
+                except: # the game is over. So add it and return
+                    game_over = True
                     
         # add the move decision
         ToReturn.append(md)
