@@ -44,32 +44,35 @@ save_to_directory = r"C:\Users\timh\Downloads\tah\2048-ai\models2"
 last_saved_at = datetime.datetime.utcnow()  - datetime.timedelta(hours=1)
 while True:
 
-    g:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game()
+    # play X number of games
+    PlayResults:list[ai_tools.PlayResult] = []
+    for x in range(0, 20):
+        print("Playing game # " + str(x) + "... ")
 
-    # play game
-    print("Playing game...")
-    game_data:list[ai_tools.MoveDecision] = ai_tools.self_play(model, g)
+        g:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game()
 
-    # print the high
-    game_max:int = tools.max_value(g)
-    game_concentration:float = tools.concentration(g)
-    print("Game Max: " + str(game_max) + ", Game Concentration: " + str(round(game_concentration, 1)))
+        # play it
+        result:ai_tools.PlayResult = ai_tools.play_to_completion(model, g)
+        PlayResults.append(result)
 
-    # sort the game data by concentration gain
-    game_data_sorted:list[ai_tools.MoveDecision] = ai_tools.sort_by_gain(game_data)
+    # select the highest
+    winner:ai_tools.PlayResult = PlayResults[0]
+    for pr in PlayResults:
 
-    # select the ones we will train on
-    TopPercentToTrain = 0.10
-    CountToTrain = math.floor(len(game_data_sorted) * TopPercentToTrain)
-    ToTrain:list[ai_tools.MoveDecision] = []
-    for x in range(0, CountToTrain):
-        ToTrain.append(game_data_sorted[x])
+        # firstly, replace it if this one won and the current winner did not
+        if pr.game_won == True and winner.game_won == False:
+            winner = pr
+        elif pr.concentration > winner.concentration: # secondly, if the concentration is higher
+            winner = pr
+    
+    # print it
+    print("Best game = Max Val: " + str(winner.max_value) + ", Concentration: " + str(winner.concentration))
 
     
     # Establish a list of training data (inputs + outputs)
     inputs:list[list[int]] = [] #A list of "board positions" (scenarios) as the input
     outputs:list[list[int]] = [] # A list of the decision that was made (correctly) in each scenario
-    for md in ToTrain:
+    for md in winner.move_decisions:
         # assemble a list of input & output scenarios
         inputs.append(md.input)
         outputs.append(md.output_polarized)
