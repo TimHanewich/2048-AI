@@ -23,7 +23,9 @@
     - Avg Concentration: 24.215
 
 ## Structure 2
-I'm adding significantly more hidden neurons to a model and training from there.
+I'm adding significantly more hidden neurons to a model and training from there. 
+
+I halted it's training on January 31, 2023 @ 11:43 PM. It clearly is not working.
 
 ### Tests
 - 2023-01-31 04-46-14.085862 (start/after only 1 training)
