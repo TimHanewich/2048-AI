@@ -46,3 +46,6 @@ I halted it's training on January 31, 2023 @ 11:43 PM. It clearly is not working
 - 2023-02-01 04-26-09.856992
     - Avg Max Value: 104.8
     - Avg Concentration: 18.059375
+
+## models4
+This uses a different learning method. This plays X number of games side by side. Then selects the game that worked out the best. Then trains the neural network on every decision that was made during that game.
