@@ -257,16 +257,4 @@ def explore(g:Py2048_Engine.Game.Game) -> list[MoveOutcome]:
     
     return ToReturn
 
-g = Py2048_Engine.Game.Game()
-while True:
 
-    data = explore(g)
-    
-
-    print(g)
-    print("There are " + str(len(data)) + " potential moves.")
-    print("########")
-    input()
-
-
-    g.right()
