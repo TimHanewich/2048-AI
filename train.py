@@ -68,6 +68,14 @@ while True:
     # print it
     print("Best game = Max Val: " + str(winner.max_value) + ", Concentration: " + str(winner.concentration))
 
+    # also print the averages
+    max_vals:list[int] = []
+    concentrations:list[float] = []
+    for result in PlayResults:
+        max_vals.append(result.max_value)
+        concentrations.append(result.concentration)
+    print("Averages = Max Val: " + str(sum(max_vals) / len(max_vals)) + ", Concentrations: " + str(sum(concentrations) / len(concentrations)))
+
     
     # Establish a list of training data (inputs + outputs)
     inputs:list[list[int]] = [] #A list of "board positions" (scenarios) as the input
