@@ -213,10 +213,13 @@ def count_different_tiles(g1:Py2048_Engine.Game.Game, g2:Py2048_Engine.Game.Game
 
 
 class MoveOutcome:
+
+    # the decision
     direction:str = None # either "up", "right", "down", or "left"
-    game:Py2048_Engine.Game.Game = None # the game output
     
-    # statuses
+    
+    # the result
+    game:Py2048_Engine.Game.Game = None # the game output
     is_winning:bool = False # this move won the game
     is_losing:bool = False # this move lost the game
 
