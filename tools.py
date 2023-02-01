@@ -212,27 +212,12 @@ def count_different_tiles(g1:Py2048_Engine.Game.Game, g2:Py2048_Engine.Game.Game
     return ToReturn
 
 
-class MoveOutcome:
+def legal_moves(g:Py2048_Engine.Game.Game) -> list[str]:
 
-    # the decision
-    direction:str = None # either "up", "right", "down", or "left"
-    
-    
-    # the result
-    game:Py2048_Engine.Game.Game = None # the game output
-    is_winning:bool = False # this move won the game
-    is_losing:bool = False # this move lost the game
-
-def explore(g:Py2048_Engine.Game.Game) -> list[MoveOutcome]:
-
-    ToReturn:list[MoveOutcome] = []
+    ToReturn:list[str] = []
     ToTry:list[str] = ["up", "right", "down", "left"]
     for move in ToTry:
 
-        # create the MoveOutcome
-        mc:MoveOutcome = MoveOutcome()
-        mc.direction = move
-        
         # copy the game
         TheoryGame:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game(copy.deepcopy(g.getBoard()))
 
@@ -246,18 +231,12 @@ def explore(g:Py2048_Engine.Game.Game) -> list[MoveOutcome]:
                 TheoryGame.down()
             elif move == "left":
                 TheoryGame.left()
-        except Py2048_Engine.Game.GameWonException:
-            mc.is_winning = True
-        except Py2048_Engine.Game.GameLostException:
-            mc.is_losing = True
-        
+        except:
+            pass
 
         # only add if there are more than 1 difference between (an addition was made)
         if count_different_tiles(g, TheoryGame) > 1:
-            mc.game = TheoryGame
-            mc.direction = move
-            ToReturn.append(mc)
+            ToReturn.append(move)
     
     return ToReturn
-
 
