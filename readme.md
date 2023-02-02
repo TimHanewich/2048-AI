@@ -49,3 +49,11 @@ I halted it's training on January 31, 2023 @ 11:43 PM. It clearly is not working
 
 ## models4
 This uses a different learning method. This plays X number of games side by side. Then selects the game that worked out the best. Then trains the neural network on every decision that was made during that game.
+
+### Tests
+- 2023-02-01 20-06-10.626808
+    - Avg Max Value: 128.4
+    - Avg Concentration: 18.5890625
+- 2023-02-01 23-52-37.388295
+    - Avg Max Value: 135.2
+    - Avg Concentration: 19.7078125
