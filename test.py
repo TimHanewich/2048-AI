@@ -4,7 +4,7 @@ import Py2048_Engine.Game
 import tools
 import ai_tools
 
-model_dir_path:str = r"C:\Users\timh\Downloads\tah\2048-ai\models2\2023-02-01 04-26-09.856992"
+model_dir_path:str = r"C:\Users\timh\Downloads\tah\2048-ai\models4\2023-02-01 20-06-10.626808"
 
 # load the model
 model:tf.keras.Sequential = tf.keras.models.load_model(model_dir_path)
@@ -22,11 +22,11 @@ for x in range(0, play_count):
 
     # play to completion
     print("Playing game # " + str(x+1) + "... ")
-    data:list[ai_tools.MoveDecision] = ai_tools.self_play(model, g)
+    pr:ai_tools.PlayResult = ai_tools.play_to_completion(model, g)
 
     # take a note
-    maxs.append(tools.max_value(g))
-    concentrations.append(tools.concentration(g))
+    maxs.append(pr.max_value)
+    concentrations.append(pr.concentration)
 
 # print the results
 print("Average Results after " + str(play_count) + " games:")
