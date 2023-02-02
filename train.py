@@ -90,7 +90,7 @@ while True:
     ouputs_np = np.array(outputs)
 
     # fit
-    print("Training...")
+    print("Training started @ " + str(datetime.datetime.now("EST")) + "...")
     model.fit(inputs_np, ouputs_np, epochs=3000, verbose=False)
 
     # if the amount of time since the last training has surpassed the limit, save
