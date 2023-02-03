@@ -88,9 +88,6 @@ while True:
     # turn into numpy arrays
     inputs_np = np.array(inputs)
     ouputs_np = np.array(outputs)
-    print("Inputs: " + str(len(inputs_np)))
-    print("Outputs: " + str(len(ouputs_np)))
-    input("d")
 
     # fit
     print("Training started @ " + str(datetime.datetime.now()) + "...")
