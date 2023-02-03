@@ -5,16 +5,19 @@ import copy
 import numpy as np
 
 class MoveDecision:
-    input:list[int] = [] # 176 long
-    output_polarized:list[int] = [] # 4 long, but the decision that was made is 1, the decision that was not made is 0. THIS IS WHAT WILL BE USED FOR TRAINING
+
+    def __init__(self) -> None:
+        self.input:list[int] = [] # 176 long
+        self.output_polarized:list[int] = [] # 4 long, but the decision that was made is 1, the decision that was not made is 0. THIS IS WHAT WILL BE USED FOR TRAINING
 
 class PlayResult:
 
-    move_decisions:list[MoveDecision] = []
-    game_won:bool = False
-    game_lost:bool = False
-    max_value:int = 0
-    concentration:float = 0.0
+    def __init__(self) -> None:
+        self.move_decisions:list[MoveDecision] = []
+        self.game_won:bool = False
+        self.game_lost:bool = False
+        self.max_value:int = 0
+        self.concentration:float = 0.0
 
 
 # plays until win, loss, or frozen (AI keeps just doing the same thing over and over again and the game goes nowhere)
