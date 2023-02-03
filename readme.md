@@ -50,6 +50,8 @@ I halted it's training on January 31, 2023 @ 11:43 PM. It clearly is not working
 ## models4
 This uses a different learning method. This plays X number of games side by side. Then selects the game that worked out the best. Then trains the neural network on every decision that was made during that game.
 
+**I did notice a critical error in my code around 9:50 AM EST on February 3, 2023. I was declaring the list properties of classes outside of the __init__ which is they they were building up so many child elements (shared amongst all instances of the class). I corrected it and continued on. Any model after 2023-02-03 12-41-39.969567 is trained using the new version**
+
 ### Tests
 - 2023-02-01 20-06-10.626808
     - Avg Max Value: 128.4
