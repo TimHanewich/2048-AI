@@ -91,7 +91,7 @@ while True:
 
     # fit
     print("Training started @ " + str(datetime.datetime.now()) + "...")
-    model.fit(inputs_np, ouputs_np, epochs=3000, verbose=True)
+    model.fit(inputs_np, ouputs_np, epochs=800, verbose=True)
 
     # if the amount of time since the last training has surpassed the limit, save
     time_since_save:datetime.timedelta = datetime.datetime.utcnow() - last_saved_at
