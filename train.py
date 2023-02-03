@@ -41,7 +41,7 @@ save_to_directory = r"C:\Users\timh\Downloads\tah\2048-ai\models4"
 
 
 # Train
-last_saved_at = datetime.datetime.utcnow()  - datetime.timedelta(hours=1)
+last_saved_at = datetime.datetime.utcnow()  #- datetime.timedelta(hours=1)
 while True:
 
     # play X number of games
@@ -88,6 +88,9 @@ while True:
     # turn into numpy arrays
     inputs_np = np.array(inputs)
     ouputs_np = np.array(outputs)
+    print("Inputs: " + str(len(inputs_np)))
+    print("Outputs: " + str(len(ouputs_np)))
+    input("d")
 
     # fit
     print("Training started @ " + str(datetime.datetime.now()) + "...")
