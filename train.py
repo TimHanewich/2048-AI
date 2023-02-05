@@ -9,7 +9,7 @@ import datetime
 import ai_tools
 
 # load model?
-model_path:str = r"C:\Users\timh\Downloads\tah\2048-ai\models4\2023-02-04 15-28-39.432783"
+model_path:str = r"C:\Users\timh\Downloads\tah\2048-ai\models4\2023-02-05 01-42-52.524390"
 model:tensorflow.keras.Sequential = None
 if model_path != None and model_path != "":
     print("Loading model from '" + model_path + "'")
