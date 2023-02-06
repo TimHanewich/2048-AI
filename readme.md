@@ -89,3 +89,6 @@ This uses a different learning method. This plays X number of games side by side
 - 2023-02-05 22-53-50.155704
     - Avg Max Value: 164.4
     - Avg Concentration: 22.6171875
+- 2023-02-06 18-18-31.158156
+    - Avg Max Value: 172.0
+    - Avg Concentration: 23.771875
