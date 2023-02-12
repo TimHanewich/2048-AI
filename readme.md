@@ -101,3 +101,7 @@ This uses a different learning method. This plays X number of games side by side
 - 2023-02-10 19-48-12.580502
     - Avg Max Value: 122.6
     - Avg Concentration: 18.0046875
+
+
+## models5
+I added more hidden neurons for this one. And it plays 10 games and chooses the best, not 20. I'm hoping this will allow it to train a bit faster (not spending so much time simulating a game).
