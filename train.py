@@ -38,7 +38,7 @@ save_to_directory = r"C:\Users\timh\Downloads\tah\2048-ai\models5"
 
 
 # Train
-last_saved_at = datetime.datetime.utcnow()  #- datetime.timedelta(hours=1)
+last_saved_at = datetime.datetime.utcnow()  - datetime.timedelta(hours=1)
 while True:
 
     # play X number of games
