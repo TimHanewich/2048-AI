@@ -9,7 +9,7 @@ import datetime
 import ai_tools
 
 # load model?
-model_path:str = r"C:\Users\timh\Downloads\tah\2048-ai\models4\2023-02-11 04-43-04.977166"
+model_path:str = r""
 model:tensorflow.keras.Sequential = None
 if model_path != None and model_path != "":
     print("Loading model from '" + model_path + "'")
@@ -17,18 +17,14 @@ if model_path != None and model_path != "":
 else:
     print("A model path was not provided! Constructing a new model...")
 
-    layer_input:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Input(176)
-    layer_h1:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(150, "relu")
-    layer_h2:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(100, "relu")
-    layer_h3:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(50, "relu")
-    layer_output:tensorflow.keras.layers.Dense = tensorflow.keras.layers.Dense(4)
-
     model = tensorflow.keras.Sequential()
-    model.add(layer_input)
-    model.add(layer_h1)
-    model.add(layer_h2)
-    model.add(layer_h3)
-    model.add(layer_output)
+    model.add(tensorflow.keras.layers.Input(350))
+    model.add(tensorflow.keras.layers.Dense(300, "relu"))
+    model.add(tensorflow.keras.layers.Dense(250, "relu"))
+    model.add(tensorflow.keras.layers.Dense(200, "relu"))
+    model.add(tensorflow.keras.layers.Dense(100, "relu"))
+    model.add(tensorflow.keras.layers.Dense(30, "relu"))
+    model.add(tensorflow.keras.layers.Dense(4))
     model.compile("adam", "mean_squared_error")
 
 print("Model assembled.")
