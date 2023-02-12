@@ -105,3 +105,11 @@ This uses a different learning method. This plays X number of games side by side
 
 ## models5
 I added more hidden neurons for this one. And it plays 10 games and chooses the best, not 20. I'm hoping this will allow it to train a bit faster (not spending so much time simulating a game).
+
+### Tests
+- 2023-02-12 19-31-40.975074
+    - Avg Max Value: 155.8
+    - Avg Concentration: 21.1671875
+- 2023-02-12 21-36-06.716441
+    - Avg Max Value: 126.8
+    - Avg Concentration: 18.08125
