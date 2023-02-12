@@ -42,7 +42,7 @@ while True:
 
     # play X number of games
     PlayResults:list[ai_tools.PlayResult] = []
-    for x in range(0, 20):
+    for x in range(0, 10):
         print("Playing game # " + str(x) + "... ")
 
         g:Py2048_Engine.Game.Game = Py2048_Engine.Game.Game()
