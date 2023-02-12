@@ -4,7 +4,7 @@ import Py2048_Engine.Game
 import tools
 import ai_tools
 
-model_dir_path:str = r"C:\Users\timh\Downloads\tah\2048-ai\models4\2023-02-10 19-48-12.580502"
+model_dir_path:str = r"C:\Users\timh\Downloads\tah\2048-ai\models4\2023-02-11 18-20-05.813883"
 
 # load the model
 model:tf.keras.Sequential = tf.keras.models.load_model(model_dir_path)
