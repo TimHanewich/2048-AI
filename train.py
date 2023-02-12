@@ -18,7 +18,8 @@ else:
     print("A model path was not provided! Constructing a new model...")
 
     model = tensorflow.keras.Sequential()
-    model.add(tensorflow.keras.layers.Input(350))
+    model.add(tensorflow.keras.layers.Input(176))
+    model.add(tensorflow.keras.layers.Dense(400, "relu"))
     model.add(tensorflow.keras.layers.Dense(300, "relu"))
     model.add(tensorflow.keras.layers.Dense(250, "relu"))
     model.add(tensorflow.keras.layers.Dense(200, "relu"))
