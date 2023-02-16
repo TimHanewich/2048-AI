@@ -128,3 +128,6 @@ I added more hidden neurons for this one. And it plays 10 games and chooses the 
 - 2023-02-15 03-20-23.840451
     - Avg Max Value: 125.2
     - Avg Concentration: 18.4609375
+- 2023-02-16 01-54-27.101415
+    - Avg Max Value: 124.0
+    - Avg Concentration: 18.534375
