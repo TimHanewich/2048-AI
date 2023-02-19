@@ -1,3 +1,6 @@
+# 2048 AI
+I tried to train a sequential neural network to play the game 2048 using TensorFlow (keras). As seen below, this attempt seemed to be unsuccessful or not enough learning time was allocated.
+
 ## Exlaining the folders
 - **models** - First implementation. Development ended on this commit *3cbd1287113f01dc7fc61f25e0850c716140733d*
 - **models2** - Added more hidden layers, started new model from scratch.
